@@ -1,0 +1,46 @@
+﻿@model TrahvManage.Models.Account.AccountModel
+
+@{
+    ViewBag.Title = "Kustuta konto";
+}
+
+<h2>Kustuta konto</h2>
+
+<h3>Kas olete kindel, et soovite selle kustutada?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nimi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            Email
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Isikukood
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonalCode)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Kustuta" class="btn btn-default" /> | @Html.ActionLink("Tagasi nimekirja", "Index")
+        </div>
+    }
+</div>

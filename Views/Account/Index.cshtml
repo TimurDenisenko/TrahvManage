@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TrahvManage.Models.Account.AccountModel>
+
+@{
+    ViewBag.Title = "Kontod";
+}
+
+<h2>Kontod</h2>
+
+<p>
+    @Html.ActionLink("Loo uus", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nimi
+        </th>
+        <th>
+            Vanus
+        </th>
+        <th>
+            Sugu
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Pin-kood
+        </th>
+        <th>
+            Isikukood
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PinCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonalCode)
+        </td>
+        <td>
+            @Html.ActionLink("Muuda", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Kustuta", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
