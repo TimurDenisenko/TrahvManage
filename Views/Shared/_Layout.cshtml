@@ -32,12 +32,16 @@
                 @{
                     if (!AccountController.Authorized)
                     {
-                        <li>@Html.ActionLink("Registreerimine", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                        <li> | </li>
                         <li>@Html.ActionLink("Logi sisse", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        <li> | </li>
+                        <li>@Html.ActionLink("Registreerimine", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                     }
                     else
                     {
+                        <li>
+                            @Html.ActionLink("Tere " + AccountController.Name + "!", "Details", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        <li> | </li>
                         <li>@Html.ActionLink("Logi välja", "Logout", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                     }
                 }
@@ -49,7 +53,7 @@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Timur Denisenko, Luca Gluhhov, Yaroslav Yekasov</p>
-        </footer>
+        </footer> 
     </div>
 
     @Scripts.Render("~/bundles/jquery")

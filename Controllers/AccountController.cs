@@ -2,6 +2,8 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using TrahvManage.Models;
 using TrahvManage.Models.Account;
@@ -11,19 +13,21 @@ namespace TrahvManage.Controllers
     public class AccountController : Controller
     {
         private TrahvContext db = new TrahvContext();
+        public static int Id { get; set; }
+        public static string Name { get; set; }
         public static bool Authorized { get; set; }
         public static string Role { get; set; }
         public ActionResult Index()
         {
-            Authorized = Convert.ToBoolean(HttpContext.Cache.Get("Authorized"));
-            if (Authorized)
+            if (Authorized && Role == "Admin")
                 return View(db.Accounts.ToList());
+            else if (Authorized && Role != "Admin")
+                return RedirectToAction("Index", "Home");
             else
                 return RedirectToAction("Register", "Account");
         }
         public ActionResult Create()
         {
-            Authorized = Convert.ToBoolean(HttpContext.Cache.Get("Authorized"));
             if (Authorized)
                 return View();
             else
@@ -31,7 +35,7 @@ namespace TrahvManage.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Age,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
         {
             if (ModelState.IsValid && !db.Accounts.Select(x => x.PersonalCode).Contains(accountModel.PersonalCode))
             {
@@ -47,7 +51,7 @@ namespace TrahvManage.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "Id,FirstName,LastName,Age,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
+        public ActionResult Register([Bind(Include = "Id,FirstName,LastName,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
         {
             if (!db.Accounts.Select(x => x.PersonalCode).Contains(accountModel.PersonalCode))
             {
@@ -56,6 +60,8 @@ namespace TrahvManage.Controllers
                 HttpContext.Cache.Insert("Authorized", true, null, DateTime.Now.AddDays(1), System.Web.Caching.Cache.NoSlidingExpiration);
                 Authorized = true;
                 Role = "User";
+                Name = accountModel.FirstName + " " + accountModel.LastName;
+                Id = accountModel.Id;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
@@ -77,6 +83,8 @@ namespace TrahvManage.Controllers
                     HttpContext.Cache.Insert("Authorized", true, null, DateTime.Now.AddDays(1), System.Web.Caching.Cache.NoSlidingExpiration);
                     Authorized = true;
                     Role = reAcc.Role;
+                    Name = reAcc.FirstName + " " + reAcc.LastName;
+                    Id = reAcc.Id;
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -88,6 +96,17 @@ namespace TrahvManage.Controllers
             HttpContext.Cache.Insert("Authorized", false, null, DateTime.Now.AddDays(1), System.Web.Caching.Cache.NoSlidingExpiration);
             Authorized = false;
             Role = string.Empty;
+            return RedirectToAction("Index", "Home");
+        }
+        public ActionResult Recovery()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Recovery([Bind(Include = "PersonalCode")] AccountModel accountModel)
+        {
+            Email(accountModel);
             return RedirectToAction("Index", "Home");
         }
         public ActionResult Edit(int? id)
@@ -105,7 +124,7 @@ namespace TrahvManage.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Age,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
         {
             if (ModelState.IsValid)
             {
@@ -136,6 +155,29 @@ namespace TrahvManage.Controllers
             db.Accounts.Remove(accountModel);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public ActionResult Details()
+        {
+            return View(db.Accounts.Find(Id));
+        }
+        private void Email(AccountModel acc)
+        {
+            AccountModel fullAcc = db.Accounts.Where(x => x.PersonalCode == acc.PersonalCode).ToArray()[0];
+            try
+            {
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "timur.denisenko.work@gmail.com";
+                WebMail.Password = "duto ahun xrzh hjsq";
+                WebMail.From = "timur.denisenko.work@gmail.com";
+                WebMail.Send($"{fullAcc.Email}", "Parooli taastamine", $"Teie PIN-kood: {fullAcc.PinCode}");
+                ViewBag.Message = "Kiri on saatnud!";
+            }
+            catch (Exception)
+            {
+                ViewBag.Message = "Mul on kahju! Ei saa kirja saada!";
+            }
         }
         protected override void Dispose(bool disposing)
         {

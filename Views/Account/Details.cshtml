@@ -1,0 +1,60 @@
+﻿@model TrahvManage.Models.Account.AccountModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Üksikasjad</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Nimi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            Sugu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Pin-kood
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PinCode)
+        </dd>
+
+        <dt>
+            Isikukood
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonalCode)
+        </dd>
+
+        <dt>
+            Roll
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+
+    </dl>
+</div>

@@ -17,10 +17,6 @@ namespace TrahvManage.Models.Account
         [Required(ErrorMessage = "Sisesta perekonnanimi")]
         public string LastName { get; set; }
 
-        [RegularExpression(@"^(0?[0-9]?[0-9]|1[01][0-9]|120)$", ErrorMessage = "Vale vanus")]
-        [Required(ErrorMessage = "Sisesta vanus")]
-        public int Age { get; set; }
-
         [RegularExpression(@"^(Male|Female|Other|Non-Binary)$", ErrorMessage = "Vale sugu")]
         [Required(ErrorMessage = "Sisesta sugu")]
         public string Gender { get; set; }
