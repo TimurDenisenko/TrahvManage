@@ -47,6 +47,7 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Register()
         {
+            Response.Write("<script>alert('succ');</script>");
             return View();
         }
         [HttpPost]
