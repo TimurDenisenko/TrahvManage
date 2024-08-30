@@ -1,0 +1,63 @@
+﻿@model TrahvManage.Models.FineModel
+
+@{
+    ViewBag.Title = "Kustuta";
+}
+
+<h2>Kustuta</h2>
+
+<h3>Kas olete kindel, et soovite selle kustutada?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Auto number
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutoNumber)
+        </dd>
+
+        <dt>
+            Juhtum
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Incident)
+        </dd>
+
+        <dt>
+            Juhtumi koht
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncidentPlace)
+        </dd>
+
+        <dt>
+            Juhtumi päev
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncidentDate)
+        </dd>
+
+        <dt>
+            Trahv summa
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FineAmount)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Kustuta" class="btn btn-default" /> |
+            @Html.ActionLink("Tagasi nimekirja", "Index")
+        </div>
+    }
+</div>

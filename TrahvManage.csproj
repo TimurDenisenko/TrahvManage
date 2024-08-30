@@ -128,13 +128,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FineController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\CustomAuthorizeAttribute.cs" />
     <Compile Include="Models\DB\TrahvContext.cs" />
     <Compile Include="Models\DB\TrahvDBInitializer.cs" />
+    <Compile Include="Models\FineModel.cs" />
+    <Compile Include="Models\PersonalCodeValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +198,11 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\Recovery.cshtml" />
+    <Content Include="Views\Fine\Create.cshtml" />
+    <Content Include="Views\Fine\Delete.cshtml" />
+    <Content Include="Views\Fine\Details.cshtml" />
+    <Content Include="Views\Fine\Edit.cshtml" />
+    <Content Include="Views\Fine\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

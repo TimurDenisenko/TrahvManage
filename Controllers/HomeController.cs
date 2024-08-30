@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace TrahvManage.Controllers
 {
@@ -10,7 +6,6 @@ namespace TrahvManage.Controllers
     {
         public ActionResult Index()
         {
-            AccountController.Authorized = Convert.ToBoolean(HttpContext.Cache.Get("Authorized"));
             if (AccountController.Authorized)
                 return View();
             else

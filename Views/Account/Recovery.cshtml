@@ -3,7 +3,11 @@
 @{
     ViewBag.Title = "Parooli taastamine";
 }
-
+<script>
+    function showPopup(uusParool) {
+        alert("Teie uus parool on: " + uusParool);
+    }
+</script>
 <h2>Parooli taastamine</h2>
 
 @using (Html.BeginForm()) 

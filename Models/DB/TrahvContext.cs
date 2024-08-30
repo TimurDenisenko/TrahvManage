@@ -6,5 +6,7 @@ namespace TrahvManage.Models
     public class TrahvContext : DbContext
     {
         public DbSet<AccountModel> Accounts { get; set; }
+
+        public DbSet<FineModel> Fines { get; set; }
     }
 }

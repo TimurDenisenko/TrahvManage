@@ -57,13 +57,10 @@ namespace TrahvManage.Controllers
             {
                 accountModel.Role = "User";
                 db.Accounts.Add(accountModel);
-                HttpContext.Cache.Insert("Authorized", true, null, DateTime.Now.AddDays(1), System.Web.Caching.Cache.NoSlidingExpiration);
-                Authorized = true;
                 Role = "User";
                 Name = accountModel.FirstName + " " + accountModel.LastName;
-                Id = accountModel.Id;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account");
             }
             return View(accountModel);
         }
@@ -162,9 +159,9 @@ namespace TrahvManage.Controllers
         }
         private void Email(AccountModel acc)
         {
-            AccountModel fullAcc = db.Accounts.Where(x => x.PersonalCode == acc.PersonalCode).ToArray()[0];
             try
             {
+                AccountModel fullAcc = db.Accounts.Where(x => x.PersonalCode == acc.PersonalCode).ToArray()[0];
                 WebMail.SmtpServer = "smtp.gmail.com";
                 WebMail.SmtpPort = 587;
                 WebMail.EnableSsl = true;

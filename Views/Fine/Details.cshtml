@@ -1,0 +1,55 @@
+﻿@model TrahvManage.Models.FineModel
+
+@{
+    ViewBag.Title = "Üksikasjad";
+}
+
+<h2>Üksikasjad</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Auto number
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutoNumber)
+        </dd>
+
+        <dt>
+            Juhtum
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Incident)
+        </dd>
+
+        <dt>
+            Juhtumi koht
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncidentPlace)
+        </dd>
+
+        <dt>
+            Juhtumi päev
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncidentDate)
+        </dd>
+
+        <dt>
+            Trahv summa
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FineAmount)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Muuda", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Tagasi nimekirja", "Index")
+</p>
