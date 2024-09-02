@@ -1,4 +1,4 @@
-﻿@using TrahvManage.Controllers;
+﻿@using TrahvManage.Models;
 
 <!DOCTYPE html>
 <html>
@@ -22,9 +22,9 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     @{
-                        if (AccountController.Authorized)
+                        if (UserState.Authorized)
                         {
-                            if (AccountController.Role == "Admin")
+                            if (UserState.Role == "Admin")
                             {
                                 <li>@Html.ActionLink("Kontod", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
                             }
@@ -35,7 +35,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 @{
-                    if (!AccountController.Authorized)
+                    if (!UserState.Authorized)
                     {
                         <li>@Html.ActionLink("Logi sisse", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                         <li> | </li>
@@ -44,7 +44,7 @@
                     else
                     {
                         <li>
-                            @Html.ActionLink("Tere " + AccountController.Name + "!", "Details", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            @Html.ActionLink("Tere " + UserState.Name + "!", "Details", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
                         </li>
                         <li> | </li>
                         <li>@Html.ActionLink("Logi välja", "Logout", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>

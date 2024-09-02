@@ -134,7 +134,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Models\UserState.cs" />
     <Compile Include="Models\DB\TrahvContext.cs" />
     <Compile Include="Models\DB\TrahvDBInitializer.cs" />
     <Compile Include="Models\FineModel.cs" />

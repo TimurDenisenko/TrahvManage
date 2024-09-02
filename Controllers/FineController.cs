@@ -11,14 +11,10 @@ namespace TrahvManage.Controllers
         private TrahvContext db = new TrahvContext();
         public ActionResult Index()
         {
-            if (!AccountController.Authorized)
-                return RedirectToAction("Register", "Account");
             return View(db.Fines.ToList());
         }
         public ActionResult Details(int? id)
         {
-            if (!AccountController.Authorized)
-                return RedirectToAction("Register", "Account");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -32,16 +28,12 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Create()
         {
-            if (!AccountController.Authorized)
-                return RedirectToAction("Register", "Account");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,AutoNumber,Incident,IncidentPlace,IncidentDate,FineAmount")] FineModel fineModel)
         {
-            if (!AccountController.Authorized)
-                return RedirectToAction("Register", "Account");
             if (ModelState.IsValid)
             {
                 db.Fines.Add(fineModel);
@@ -53,8 +45,6 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Edit(int? id)
         {
-            if (!AccountController.Authorized)
-                return RedirectToAction("Register", "Account");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -70,8 +60,6 @@ namespace TrahvManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,AutoNumber,Incident,IncidentPlace,IncidentDate,FineAmount")] FineModel fineModel)
         {
-            if (!AccountController.Authorized)
-                return RedirectToAction("Register", "Account");
             if (ModelState.IsValid)
             {
                 db.Entry(fineModel).State = EntityState.Modified;
@@ -82,8 +70,6 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Delete(int? id)
         {
-            if (!AccountController.Authorized)
-                return RedirectToAction("Register", "Account");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -99,8 +85,6 @@ namespace TrahvManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (!AccountController.Authorized)
-                return RedirectToAction("Register", "Account");
             FineModel fineModel = db.Fines.Find(id);
             db.Fines.Remove(fineModel);
             db.SaveChanges();

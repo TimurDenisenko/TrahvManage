@@ -13,28 +13,18 @@ namespace TrahvManage.Controllers
     public class AccountController : Controller
     {
         private TrahvContext db = new TrahvContext();
-        public static int Id { get; set; }
-        public static string Name { get; set; }
-        public static bool Authorized { get; set; }
-        public static string Role { get; set; }
         public ActionResult Index()
         {
-            if (Authorized && Role == "Admin")
-                return View(db.Accounts.ToList());
-            else if (Authorized && Role != "Admin")
-                return RedirectToAction("Index", "Home");
-            else
-                return RedirectToAction("Register", "Account");
+             return View(db.Accounts.ToList());
         }
+        [UserState("Admin")]
         public ActionResult Create()
         {
-            if (Authorized)
-                return View();
-            else
-                return RedirectToAction("Register", "Account");
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UserState("Admin")]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
         {
             if (ModelState.IsValid && !db.Accounts.Select(x => x.PersonalCode).Contains(accountModel.PersonalCode))
@@ -47,7 +37,7 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Register()
         {
-            Response.Write("<script>alert('succ');</script>");
+            //Response.Write("<script>alert('succ');</script>");
             return View();
         }
         [HttpPost]
@@ -56,10 +46,9 @@ namespace TrahvManage.Controllers
         {
             if (!db.Accounts.Select(x => x.PersonalCode).Contains(accountModel.PersonalCode))
             {
-                accountModel.Role = "User";
+                accountModel.Role = UserState.Role = "User";
                 db.Accounts.Add(accountModel);
-                Role = "User";
-                Name = accountModel.FirstName + " " + accountModel.LastName;
+                UserState.Name = accountModel.FirstName + " " + accountModel.LastName;
                 db.SaveChanges();
                 return RedirectToAction("Login", "Account");
             }
@@ -79,10 +68,10 @@ namespace TrahvManage.Controllers
                 if (reAcc.PinCode == accountModel.PinCode)
                 {
                     HttpContext.Cache.Insert("Authorized", true, null, DateTime.Now.AddDays(1), System.Web.Caching.Cache.NoSlidingExpiration);
-                    Authorized = true;
-                    Role = reAcc.Role;
-                    Name = reAcc.FirstName + " " + reAcc.LastName;
-                    Id = reAcc.Id;
+                    UserState.Authorized = true;
+                    UserState.Role = reAcc.Role;
+                    UserState.Name = reAcc.FirstName + " " + reAcc.LastName;
+                    UserState.Id = reAcc.Id;
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -91,9 +80,8 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Logout()
         {
-            HttpContext.Cache.Insert("Authorized", false, null, DateTime.Now.AddDays(1), System.Web.Caching.Cache.NoSlidingExpiration);
-            Authorized = false;
-            Role = string.Empty;
+            UserState.Authorized = false;
+            UserState.Role = null;
             return RedirectToAction("Index", "Home");
         }
         public ActionResult Recovery()
@@ -156,7 +144,7 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Details()
         {
-            return View(db.Accounts.Find(Id));
+            return View(db.Accounts.Find(UserState.Id));
         }
         private void Email(AccountModel acc)
         {

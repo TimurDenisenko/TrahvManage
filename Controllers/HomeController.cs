@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using TrahvManage.Models;
+using TrahvManage.Models.Account;
 
 namespace TrahvManage.Controllers
 {
@@ -6,10 +8,7 @@ namespace TrahvManage.Controllers
     {
         public ActionResult Index()
         {
-            if (AccountController.Authorized)
-                return View();
-            else
-                return RedirectToAction("Register", "Account");
+            return View();
         }
     }
 }
