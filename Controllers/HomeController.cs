@@ -1,6 +1,4 @@
 ﻿using System.Web.Mvc;
-using TrahvManage.Models;
-using TrahvManage.Models.Account;
 
 namespace TrahvManage.Controllers
 {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using TrahvManage.Models;
+using TrahvManage.Services;
 
 namespace TrahvManage.Controllers
 {
@@ -11,7 +12,10 @@ namespace TrahvManage.Controllers
         private TrahvContext db = new TrahvContext();
         public ActionResult Index()
         {
-            return View(db.Fines.ToList());
+            if (UserState.Role == "User")
+                return View(db.Fines.ToList().Where(x => x.PersonalCode == db.Accounts.Find(UserState.Id).PersonalCode));
+            else
+                return View(db.Fines.ToList());
         }
         public ActionResult Details(int? id)
         {
@@ -26,12 +30,14 @@ namespace TrahvManage.Controllers
             }
             return View(fineModel);
         }
+        [UserState("Admin")]
         public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UserState("Admin")]
         public ActionResult Create([Bind(Include = "Id,AutoNumber,Incident,IncidentPlace,IncidentDate,FineAmount")] FineModel fineModel)
         {
             if (ModelState.IsValid)
@@ -43,6 +49,7 @@ namespace TrahvManage.Controllers
 
             return View(fineModel);
         }
+        [UserState("Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -58,6 +65,7 @@ namespace TrahvManage.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UserState("Admin")]
         public ActionResult Edit([Bind(Include = "Id,AutoNumber,Incident,IncidentPlace,IncidentDate,FineAmount")] FineModel fineModel)
         {
             if (ModelState.IsValid)
@@ -68,6 +76,7 @@ namespace TrahvManage.Controllers
             }
             return View(fineModel);
         }
+        [UserState("Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -83,6 +92,7 @@ namespace TrahvManage.Controllers
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [UserState("Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             FineModel fineModel = db.Fines.Find(id);
@@ -97,6 +107,11 @@ namespace TrahvManage.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult CreateRandom()
+        {
+            AccidentGenerator.LoadFine(db);
+            return View();
         }
     }
 }

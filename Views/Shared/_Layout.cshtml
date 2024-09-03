@@ -27,6 +27,7 @@
                             if (UserState.Role == "Admin")
                             {
                                 <li>@Html.ActionLink("Kontod", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Juhuslik trahv", "CreateRandom", "Fine", new { area = "" }, new { @class = "nav-link" })</li>
                             }
                             <li>@Html.ActionLink("Trahvid", "Index", "Fine", new { area = "" }, new { @class = "nav-link" })</li>
                         }

@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using TrahvManage.Models;
@@ -13,6 +13,7 @@ namespace TrahvManage.Controllers
     public class AccountController : Controller
     {
         private TrahvContext db = new TrahvContext();
+        [UserState("Admin")]
         public ActionResult Index()
         {
              return View(db.Accounts.ToList());
@@ -37,21 +38,24 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Register()
         {
-            //Response.Write("<script>alert('succ');</script>");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register([Bind(Include = "Id,FirstName,LastName,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
         {
-            if (!db.Accounts.Select(x => x.PersonalCode).Contains(accountModel.PersonalCode))
+            try
             {
-                accountModel.Role = UserState.Role = "User";
-                db.Accounts.Add(accountModel);
-                UserState.Name = accountModel.FirstName + " " + accountModel.LastName;
-                db.SaveChanges();
-                return RedirectToAction("Login", "Account");
+                if (!db.Accounts.Select(x => x.PersonalCode).Contains(accountModel.PersonalCode))
+                {
+                    accountModel.Role = UserState.Role = "User";
+                    db.Accounts.Add(accountModel);
+                    UserState.Name = accountModel.FirstName + " " + accountModel.LastName;
+                    db.SaveChanges();
+                    return RedirectToAction("Login", "Account");
+                }
             }
+            catch (Exception) { }
             return View(accountModel);
         }
         public ActionResult Login()
@@ -93,8 +97,9 @@ namespace TrahvManage.Controllers
         public ActionResult Recovery([Bind(Include = "PersonalCode")] AccountModel accountModel)
         {
             Email(accountModel);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
+        [UserState("Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -110,6 +115,7 @@ namespace TrahvManage.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UserState("Admin")]
         public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Gender,Email,PinCode,PersonalCode,Role")] AccountModel accountModel)
         {
             if (ModelState.IsValid)
@@ -120,6 +126,7 @@ namespace TrahvManage.Controllers
             }
             return View(accountModel);
         }
+        [UserState("Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -135,6 +142,7 @@ namespace TrahvManage.Controllers
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [UserState("Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             AccountModel accountModel = db.Accounts.Find(id);
