@@ -128,12 +128,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\FineController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\ChatModel.cs" />
+    <Compile Include="Models\HistoryConverter.cs" />
     <Compile Include="Models\UserState.cs" />
     <Compile Include="Models\DB\TrahvContext.cs" />
     <Compile Include="Models\DB\TrahvDBInitializer.cs" />
@@ -205,6 +208,8 @@
     <Content Include="Views\Fine\Edit.cshtml" />
     <Content Include="Views\Fine\Index.cshtml" />
     <Content Include="Views\Fine\CreateRandom.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

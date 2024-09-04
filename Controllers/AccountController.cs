@@ -38,6 +38,21 @@ namespace TrahvManage.Controllers
         }
         public ActionResult Register()
         {
+            if (db.Accounts.Count() == 0)
+            {
+                db.Accounts.Add(new AccountModel
+                {
+                    Id = 0,
+                    FirstName = "Timur",
+                    LastName = "Denisenko",
+                    Gender = "Male",
+                    Email = "timur.denisenko.2109@gmail.com",
+                    PersonalCode = "50609215714",
+                    PinCode = 1234,
+                    Role = "Admin"
+                });
+                db.SaveChanges();
+            }
             return View();
         }
         [HttpPost]

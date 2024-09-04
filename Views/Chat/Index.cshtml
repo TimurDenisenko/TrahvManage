@@ -1,0 +1,23 @@
+﻿@model IEnumerable<TrahvManage.Models.ChatModel>
+
+@{
+    ViewBag.Title = "Tehniline tugi";
+}
+
+<h2>Tehniline tugi</h2>
+
+<table class="table" style="text-align: center">
+    <tr>
+        <td>
+            @Html.ActionLink("Uus vestlus", "Create")
+        </td>
+    </tr>
+    @foreach (TrahvManage.Models.ChatModel item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Vestlus #" + item.Id, "Edit")
+            </td>
+        </tr>
+    }
+</table>

@@ -35,16 +35,17 @@ namespace TrahvManage.Services
         };
         public static void LoadFine(TrahvContext db)
         {
-            db.Fines.Add(GenerateRandomAccident());
+            FineModel fine = GenerateRandomAccident(db);
+            if (fine == null)
+                return;
+            db.Fines.Add(GenerateRandomAccident(db));
             db.SaveChanges();
         }
-        public static FineModel GenerateRandomAccident()
+        private static FineModel GenerateRandomAccident(TrahvContext db)
         {
-            string pc;
-            if (random.Next(100) % 2 == 0)
-                pc = "50609215715";
-            else
-                pc = GenerateRandomDriverId();
+            if (db.Accounts.Count() < 2)
+                return null;
+            string pc = db.Accounts.Where(x => x.Role != "Admin").ToArray()[random.Next(db.Accounts.Count()-1)].PersonalCode;
             return new FineModel
             {
                 GifUrl = gifUrls[random.Next(gifUrls.Length)],
@@ -56,9 +57,6 @@ namespace TrahvManage.Services
                 FineAmount = (float)random.NextDouble() * 5000,
             };
         }
-
-        private static string GenerateRandomDriverId() => 
-            new string(Enumerable.Repeat("0123456789", 11).Select(s => s[random.Next(s.Length)]).ToArray());
 
         private static DateTime GenerateRandomDate()
         {

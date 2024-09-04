@@ -1,0 +1,36 @@
+﻿@model TrahvManage.Models.ChatModel
+
+@{
+    ViewBag.Title = "Vestlus";
+}
+
+<h2>Vestlus</h2>
+
+<style>
+    textarea {
+        resize: none;
+        min-width: 1275px;
+    }
+    
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div>
+            <div style="display: inline-flex">
+                @Html.TextAreaFor(model => model.History)
+                <input type="submit" value="Saada" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Tagasi", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
