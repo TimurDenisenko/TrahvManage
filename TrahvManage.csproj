@@ -209,6 +209,7 @@
     <Content Include="Views\Fine\Index.cshtml" />
     <Content Include="Views\Fine\CreateRandom.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\Edit.cshtml" />
     <Content Include="Views\Chat\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>

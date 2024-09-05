@@ -16,6 +16,19 @@
 {
     @Html.AntiForgeryToken()
     <div style="overflow-y: scroll; height: 300px;" id="scrollableDiv">
+        @foreach (Tuple<string, string> item in TrahvManage.Models.HistoryConverter.ConvertFromString(Model.History))
+        {
+            <div>
+                @if (item.Item1 == Model.FirstPersonalCode)
+                {
+                    <p>@fp - @item.Item2</p>
+                }
+                else
+                {
+                    <p>@sp - @item.Item2</p>
+                }
+            </div>
+        }
     </div>
     <script>
         function scrollToBottom() {
@@ -26,6 +39,9 @@
     </script>
     <div style="display: inline-flex">
         @Html.TextAreaFor(model => model.History)
+        <script>
+            document.getElementById("History").value = "";
+        </script>
         <input type="submit" value="Saada" class="btn btn-default" />
     </div>
 }

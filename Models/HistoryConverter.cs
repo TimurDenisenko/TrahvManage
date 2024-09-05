@@ -4,24 +4,26 @@ using System.Linq;
 
 namespace TrahvManage.Models
 {
-    public class HistoryConverter
+    public static class HistoryConverter
     {
-        public string ConvertToString(TrahvContext db, string history)
+        public static string ConvertToString(TrahvContext db, string history)
         {
             int key = db.Chats.Count();
             string personalCode = db.Accounts.Find(UserState.Id).PersonalCode;
-            return $"{key}:::{personalCode}:::{history}";
+            return $"{personalCode}:::{history}";
         }
-        public Dictionary<int,Tuple<string,string>> ConvertFromString(string history)
+        public static List<Tuple<string,string>> ConvertFromString(string history)
         {
-            string[] msgs = history.Split(',');
-            Dictionary<int, Tuple<string, string>> dictionary = new Dictionary<int, Tuple<string, string>>();
+            string[] msgs = history.Split(new string[] { ",,," }, StringSplitOptions.None).Select(x => x.Trim()).ToArray();
+            List<Tuple<string, string>> list = new List<Tuple<string, string>>();
             foreach (string msg in msgs)
             {
-                string[] values = msg.Split(new string[] { ":::" }, StringSplitOptions.None);
-                dictionary.Add(Convert.ToInt32(values[0]), new Tuple<string, string>(values[1], values[2]));
+                string[] values = msg.Split(new string[] { ":::" }, StringSplitOptions.None).Select(x => x.Trim()).ToArray();
+                list.Add(new Tuple<string, string>(values[0], values[1]));
             }
-            return dictionary;
+            return list;
         }
+        public static string Concat(TrahvContext db, ChatModel newMessage) =>
+            $"{db.Chats.Find(newMessage.Id).History},,,{ConvertToString(db, newMessage.History)}";
     }
 }
