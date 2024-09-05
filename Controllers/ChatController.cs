@@ -20,12 +20,14 @@ namespace TrahvManage.Controllers
                 return View(db.Chats);
             return View(db.Chats.Where(x => x.FirstPersonalCode == ps));
         }
+        [UserState("User")]
         public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UserState("User")]
         public ActionResult Create([Bind(Include = "Id,History")] ChatModel chatModel)
         {
             chatModel.FirstPersonalCode = db.Accounts.Find(UserState.Id).PersonalCode;
