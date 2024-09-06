@@ -18,7 +18,19 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Incident, labelText: "Juhtum", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Incident, new { htmlAttributes = new { @class = "form-control" } })
+
+            @{
+                List<SelectListItem> list = new List<SelectListItem>();
+                foreach (string item in TrahvManage.Services.AccidentGenerator.incidents)
+                {
+                    list.Add(new SelectListItem { Text = item, Value = item });
+                }
+            }
+            @Html.DropDownListFor(
+            model => model.Incident,
+            new SelectList(list, "Value", "Text"),
+            new { @class = "form-control" }
+            ) 
             @Html.ValidationMessageFor(model => model.Incident, "", new { @class = "text-danger" })
         </div>
     </div>

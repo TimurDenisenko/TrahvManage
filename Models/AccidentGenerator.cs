@@ -25,13 +25,13 @@ namespace TrahvManage.Services
             "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczZmN3FkM3Mwa2VtOTk3ajV3YzIyMHVzZnNsZmlobGYwdzV5czUxeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6vHQVvI6QENag/giphy.webp",
             "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXMzMHIwdHNjcmpjeDJpY3owNHIzMms5anllbzBsanI0c2Z6ejZnMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hLhM83i3eUezES4tlC/giphy.webp",
         };
-        private static readonly string[] incidents =
+        public static readonly string[] incidents =
         {
-            "kellegi teise sõiduki kahjustamine",
-            "kiiruse ületamine",
-            "joobes juhtimine",
-            "juhiloata juht",
-            "sõitmine vales kohas"
+            "Kellegi teise sõiduki kahjustamine",
+            "Kiiruse ületamine",
+            "Joobes juhtimine",
+            "Juhiloata juht",
+            "Sõitmine vales kohas"
         };
         public static void LoadFine(TrahvContext db)
         {

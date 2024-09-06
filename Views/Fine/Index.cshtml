@@ -23,45 +23,33 @@
             Juhtum
         </th>
         <th>
-            Juhtumi koht
-        </th>
-        <th>
-            Juhtumi päev
-        </th>
-        <th>
             Trahv summa
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AutoNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Incident)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IncidentPlace)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IncidentDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FineAmount)
-        </td>
-        <td>
-            @{
-                @Html.ActionLink("Üksikasjad", "Details", new { id = item.Id })
-                if (TrahvManage.Models.UserState.Role == "Admin")
-                {
-                    @Html.ActionLink("| Muuda", "Edit", new { id = item.Id })
-                    @Html.ActionLink("| Kustuta", "Delete", new { id = item.Id })
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AutoNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Incident)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FineAmount)
+            </td>
+            <td>
+                @{
+                    @Html.ActionLink("Üksikasjad", "Details", new { id = item.Id })
+                    if (TrahvManage.Models.UserState.Role == "Admin")
+                    {
+                        @Html.ActionLink("| Muuda", "Edit", new { id = item.Id })
+                        @Html.ActionLink("| Kustuta", "Delete", new { id = item.Id })
+                    }
                 }
-            }
-        </td>
-    </tr>
-}
+            </td>
+        </tr>
+    }
 </table>
