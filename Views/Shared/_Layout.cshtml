@@ -14,7 +14,6 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Kodu", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             @*<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Переключить навигацию" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -25,6 +24,7 @@
                     @{
                         if (UserState.Authorized)
                         {
+                            <li>@Html.ActionLink("Kodu", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
                             if (UserState.Role == "Admin")
                             {
                                 <li>@Html.ActionLink("Kontod", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
@@ -33,6 +33,10 @@
                             <li>@Html.ActionLink("Trahvid", "Index", "Fine", new { area = "" }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("Tehniline tugi", "Index", "Chat", new { area = "" }, new { @class = "nav-link" })</li>
                         }
+                        else
+                        {
+                            <li>@Html.ActionLink("Kodu", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        }
                     }
                 </ul>
             </div>
@@ -40,17 +44,17 @@
                 @{
                     if (!UserState.Authorized)
                     {
-                        <li>@Html.ActionLink("Logi sisse", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        <li style="float:right">@Html.ActionLink("Logi sisse", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                         <li> | </li>
-                        <li>@Html.ActionLink("Registreerimine", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li style="float:right">@Html.ActionLink("Registreerimine", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                     }
                     else
                     {
-                        <li>
+                        <li style="float:right">
                             @Html.ActionLink("Tere " + UserState.Name + "!", "Details", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
                         </li>
                         <li> | </li>
-                        <li>@Html.ActionLink("Logi välja", "Logout", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        <li style="float:right">@Html.ActionLink("Logi välja", "Logout", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                     }
                 }
             </ul>
