@@ -3,7 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TrahvManage.Controllers;
 using TrahvManage.Models;
+using TrahvManage.Models.Account;
 
 
 namespace TrahvManage.Services
@@ -40,6 +42,14 @@ namespace TrahvManage.Services
                 return;
             db.Fines.Add(GenerateRandomAccident(db));
             db.SaveChanges();
+            AccountModel acc = db.Accounts.Where(x => x.PersonalCode == fine.PersonalCode).ToArray()[0];
+            string message = $"Lugupeetud {acc.FirstName} {acc.LastName},\n\n" +
+    $"Teavitame teid, et kontrolli tulemusena tuvastati rikkumine {fine.Incident}. Kehtivate eeskirjade ja määruste kohaselt on teile määratud trahv summas {fine.FineAmount} eurot.\n\n" +
+    "Trahvi saate maksta veebisaidil\n\n" +
+    "Kui teil on küsimusi, kirjutage meie veebisaidil olevale tehnilisele toele.\n\n" +
+    "Lugupidamisega,\nPolitsei- ja Piirivalveamet";
+
+            AccountController.Email(acc.Email, "Trahv", message);
         }
         private static FineModel GenerateRandomAccident(TrahvContext db)
         {

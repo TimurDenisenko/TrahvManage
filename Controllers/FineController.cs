@@ -31,25 +31,6 @@ namespace TrahvManage.Controllers
             return View(fineModel);
         }
         [UserState("Admin")]
-        public ActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [UserState("Admin")]
-        public ActionResult Create([Bind(Include = "Id,AutoNumber,Incident,IncidentPlace,IncidentDate,FineAmount")] FineModel fineModel)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Fines.Add(fineModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(fineModel);
-        }
-        [UserState("Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)

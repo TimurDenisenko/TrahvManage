@@ -203,7 +203,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\Recovery.cshtml" />
-    <Content Include="Views\Fine\Create.cshtml" />
     <Content Include="Views\Fine\Delete.cshtml" />
     <Content Include="Views\Fine\Details.cshtml" />
     <Content Include="Views\Fine\Edit.cshtml" />

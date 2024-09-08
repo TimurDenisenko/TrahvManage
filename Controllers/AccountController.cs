@@ -111,7 +111,8 @@ namespace TrahvManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Recovery([Bind(Include = "PersonalCode")] AccountModel accountModel)
         {
-            Email(accountModel);
+            AccountModel fullAcc = db.Accounts.Where(x => x.PersonalCode == accountModel.PersonalCode).ToArray()[0];
+            Email($"{fullAcc.Email}", "Parooli taastamine", $"Teie PIN-kood: {fullAcc.PinCode}");
             return RedirectToAction("Login", "Account");
         }
         [UserState("Admin")]
@@ -169,23 +170,20 @@ namespace TrahvManage.Controllers
         {
             return View(db.Accounts.Find(UserState.Id));
         }
-        private void Email(AccountModel acc)
+        public static void Email(string email, string teema, string message)
         {
             try
             {
-                AccountModel fullAcc = db.Accounts.Where(x => x.PersonalCode == acc.PersonalCode).ToArray()[0];
                 WebMail.SmtpServer = "smtp.gmail.com";
                 WebMail.SmtpPort = 587;
                 WebMail.EnableSsl = true;
                 WebMail.UserName = "timur.denisenko.work@gmail.com";
                 WebMail.Password = "duto ahun xrzh hjsq";
                 WebMail.From = "timur.denisenko.work@gmail.com";
-                WebMail.Send($"{fullAcc.Email}", "Parooli taastamine", $"Teie PIN-kood: {fullAcc.PinCode}");
-                ViewBag.Message = "Kiri on saatnud!";
+                WebMail.Send(email, teema, message);
             }
             catch (Exception)
             {
-                ViewBag.Message = "Mul on kahju! Ei saa kirja saada!";
             }
         }
         protected override void Dispose(bool disposing)
