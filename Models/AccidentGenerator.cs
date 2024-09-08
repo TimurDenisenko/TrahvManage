@@ -64,7 +64,7 @@ namespace TrahvManage.Services
                 Incident = incidents[random.Next(incidents.Length)],
                 IncidentPlace = places[random.Next(places.Length)],
                 IncidentDate = GenerateRandomDate().ToString(),
-                FineAmount = (float)random.NextDouble() * 5000,
+                FineAmount = (float)Math.Round(random.NextDouble() * 5000, 2),
             };
         }
 

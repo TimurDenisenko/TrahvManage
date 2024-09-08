@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -51,6 +52,7 @@ namespace TrahvManage.Controllers
         {
             if (ModelState.IsValid)
             {
+                fineModel.FineAmount = (float)Math.Round(fineModel.FineAmount, 2);
                 db.Entry(fineModel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
