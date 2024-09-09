@@ -48,6 +48,10 @@
                         @Html.ActionLink("| Muuda", "Edit", new { id = item.Id })
                         @Html.ActionLink("| Kustuta", "Delete", new { id = item.Id })
                     }
+                    if (TrahvManage.Models.UserState.Role != "Admin")
+                    {
+                        @Html.ActionLink("| Maksa", "PaymentView", new { id = item.Id, amount = item.FineAmount })
+                    }
                 }
             </td>
         </tr>

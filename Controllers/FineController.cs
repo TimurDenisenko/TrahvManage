@@ -96,5 +96,19 @@ namespace TrahvManage.Controllers
             AccidentGenerator.LoadFine(db);
             return View();
         }
+        public ActionResult PaymentView(float? amount, int? id)
+        {
+            ViewBag.Amount = amount;
+            ViewBag.Id = id;
+            return View();
+        }
+        public ActionResult PaymentResult(float? amount, int? id)
+        {
+            FineModel fineModel = db.Fines.Find(id);
+            db.Fines.Remove(fineModel);
+            db.SaveChanges();
+            ViewBag.Amount = amount;
+            return View();
+        }
     }
 }

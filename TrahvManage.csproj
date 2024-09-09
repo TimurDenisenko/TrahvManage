@@ -211,6 +211,8 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\Edit.cshtml" />
     <Content Include="Views\Chat\Create.cshtml" />
+    <Content Include="Views\Fine\PaymentView.cshtml" />
+    <Content Include="Views\Fine\PaymentResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
