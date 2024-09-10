@@ -1,9 +1,15 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Data.Entity;
+using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using TrahvManage.Models;
+using TrahvManage.Models.Account;
 using TrahvManage.Services;
 
 namespace TrahvManage.Controllers
@@ -105,10 +111,39 @@ namespace TrahvManage.Controllers
         public ActionResult PaymentResult(float? amount, int? id)
         {
             FineModel fineModel = db.Fines.Find(id);
-            db.Fines.Remove(fineModel);
-            db.SaveChanges();
             ViewBag.Amount = amount;
+            ViewBag.Id = id;
+            AccountModel acc = db.Accounts.Find(UserState.Id);
+            string message = $"Lugupeetud {acc.FirstName} {acc.LastName},<br><br>" +
+        $"Teavitame teid, et teie poolt määratud trahv summas {fineModel.FineAmount} eurot on edukalt tasutud. Täname teid õigeaegse makse eest.<br><br>" +
+        "Kui teil on küsimusi, kirjutage meie veebisaidil olevale tehnilisele toele.<br><br>" +
+        "Lugupidamisega,<br>Politsei- ja Piirivalveamet";
+            AccountController.Email(db.Accounts.Find(UserState.Id).Email, "Trahv maksti ära", message);
             return View();
         }
+
+        private FileStreamResult CreatePDF(FineModel fineModel)
+        {
+            MemoryStream stream = new MemoryStream();
+            Document pdfDoc = new Document(PageSize.A4, 25, 25, 30, 30);
+            PdfWriter.GetInstance(pdfDoc, stream).CloseStream = false;
+            pdfDoc.Open();
+            pdfDoc.Add(new Paragraph("Payment Receipt"));
+            pdfDoc.Add(new Paragraph($"Fine ID: {fineModel.Id}"));
+            pdfDoc.Add(new Paragraph($"Amount Paid: ${fineModel.FineAmount}"));
+            pdfDoc.Add(new Paragraph($"Date: {DateTime.Now.ToString("dd/MM/yyyy")}"));
+            pdfDoc.Close();
+            db.Fines.Remove(fineModel);
+            db.SaveChanges();
+            stream.Position = 0;
+            return File(stream, "application/pdf", $"Receipt_{fineModel.Id}.pdf");
+        }
+
+        public ActionResult DownloadReceipt(int id)
+        {
+            FineModel fineModel = db.Fines.Find(id);
+            return CreatePDF(fineModel);
+        }
+
     }
 }
