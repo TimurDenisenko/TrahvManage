@@ -140,10 +140,12 @@
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\FineController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\CardModel.cs" />
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\HistoryConverter.cs" />
     <Compile Include="Models\UserState.cs" />
@@ -220,8 +222,8 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\Edit.cshtml" />
     <Content Include="Views\Chat\Create.cshtml" />
-    <Content Include="Views\Fine\PaymentView.cshtml" />
-    <Content Include="Views\Fine\PaymentResult.cshtml" />
+    <Content Include="Views\Payment\PaymentView.cshtml" />
+    <Content Include="Views\Payment\PaymentResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

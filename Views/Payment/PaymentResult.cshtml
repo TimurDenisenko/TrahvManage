@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Edu!";
+}
+
+<h2>Edu!</h2>
+
+<p>Te maksasite: @TrahvManage.Controllers.PaymentController._amount€</p>
+<p>Makse tegemisest teavitamiseks on saadetud e-kiri.</p>
+<a href="@Url.Action("DownloadReceipt", "Payment")">Laadi alla kviitung</a>
+<br />
+<a href="@Url.Action("Index", "Fine")">Tagasi</a>

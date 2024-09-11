@@ -1,9 +1,0 @@
-﻿@{
-    ViewBag.Title = "Edu!";
-}
-<h1>@ViewBag.Title</h1>
-<p>Te maksasite: @ViewBag.Amount€</p>
-
-<a href="@Url.Action("DownloadReceipt", "Fine", new { id = ViewBag.Id})">Laadi alla kviitung</a>
-<br />
-<a href="@Url.Action("Index", "Fine")">Tagasi</a>

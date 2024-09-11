@@ -50,7 +50,7 @@
                     }
                     if (TrahvManage.Models.UserState.Role != "Admin")
                     {
-                        @Html.ActionLink(" | Maksa", "PaymentView", new { id = item.Id, amount = item.FineAmount })
+                        @Html.ActionLink(" | Maksa", "PaymentView", "Payment", routeValues: new { id = item.Id, amount = item.FineAmount }, htmlAttributes: null)
                     }
                 }
             </td>
