@@ -15,15 +15,19 @@
     <div class="form-group">
         @Html.LabelFor(model => model.CreditCardNumber, labelText: "Krediitkaardi number", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.CreditCardNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.CreditCardNumber, new { htmlAttributes = new { @class = "form-control", @id = "creditCardInput" } })
             @Html.ValidationMessageFor(model => model.CreditCardNumber, "", new { @class = "text-danger" })
         </div>
     </div>
-
+    <script>document.getElementById('creditCardInput').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        e.target.value = formattedValue;
+    });</script>
     <div class="form-group">
         @Html.LabelFor(model => model.ExpirationDate, labelText: "Aegumiskuupäev", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ExpirationDate, new { htmlAttributes = new { @class = "form-control datepicker w-100" } })
+            @Html.TextBoxFor(model => model.ExpirationDate, new { @class = "form-control w-100", @type = "month" })
             @Html.ValidationMessageFor(model => model.ExpirationDate, "", new { @class = "text-danger" })
         </div>
     </div>

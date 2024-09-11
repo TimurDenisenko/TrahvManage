@@ -46,6 +46,7 @@ namespace TrahvManage.Controllers
             IsValidCreditCardNumber(cardModel.CreditCardNumber) && !IsCardExpired(cardModel.ExpirationDate) && IsValidCVV(cardModel.CVV);
         private bool IsValidCreditCardNumber(string creditCardNumber)
         {
+            creditCardNumber = creditCardNumber.Replace(" ", "");
             Regex visaRegex = new Regex(@"^4[0-9]{12}(?:[0-9]{3})?$");
             Regex masterCardRegex = new Regex(@"^5[1-5][0-9]{14}$");
             Regex maestroRegex = new Regex(@"^(50|5[6-9]|6[0-9])[0-9]{10,17}$");
@@ -56,15 +57,13 @@ namespace TrahvManage.Controllers
             string[] dateParts = expirationDate.Split('-');
             int month = 0;
             int year = 0;
-            int day = 0;
-            if (dateParts.Length != 3)
+            if (dateParts.Length != 2)
                 return true;
-            if (!int.TryParse(dateParts[0], out year) || !int.TryParse(dateParts[1], out month) || !int.TryParse(dateParts[2], out day))
+            if (!int.TryParse(dateParts[0], out year) || !int.TryParse(dateParts[1], out month))
                 return true;
             int currentMonth = DateTime.Now.Month;
             int currentYear = DateTime.Now.Year;
-            int currentDay = DateTime.Now.Day;
-            if ((year < currentYear) || (year == currentYear && month < currentMonth) || (year == currentYear && month == currentMonth && day < currentDay))
+            if ((year < currentYear) || (year == currentYear && month < currentMonth))
                 return true;
             else
                 return false;

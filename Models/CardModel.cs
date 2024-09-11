@@ -11,7 +11,7 @@ namespace TrahvManage.Models
         public int Id { get; set; }
         public string CreditCardNumber { get; set; }
         [DataType(DataType.Date, ErrorMessage = "Ainult kuupäev")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:MM-yyyy}", ApplyFormatInEditMode = true)]
         public string ExpirationDate { get; set; }
         public string CVV { get; set; }
     }
